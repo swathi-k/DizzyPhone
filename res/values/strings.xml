@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DizzyPhone</string>
+    <string name="DizzyPhone">DizzyPhone!</string>
+    <string name="Start_Game">Start Game</string>
+    <string name="Settings">Settings</string>
+    <string name="action_settings">Settings</string>
+    <string name="Return">Return</string>
+    <string name="PlayerName">Player Name: </string>
+    <string name="Player1">Player 1</string>
+    
+
+	<!-- SeekBar in Settings -->
+    <string name="SettingsSeekBarMin">0.1</string>
+    <string name="SettingsSeekBarMidWay">1</string>
+    <string name="SettingsSeekBarMax">2</string>
+    <string name="GameSpeed">Game Speed: </string>
+        
+    
+    
+    <string name="GameLabel1">Portrait</string>
+    <string name="GameLabel2">Landscape</string>
+    
+    
+    <string name="GameOver">Game Over!</string>
+    
+</resources>

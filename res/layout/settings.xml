@@ -1,0 +1,98 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="cs166.swathikotturu.dizzyphone.MainActivity" >
+
+    <TextView
+        android:id="@+id/SeekBarMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/sbBar"
+        android:layout_below="@+id/sbBar"
+        android:paddingLeft="10dp"
+        android:text="@string/SettingsSeekBarMin" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/SeekBarMin"
+        android:layout_alignTop="@+id/SeekBarMin"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/SeekBarMax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            android:text="@string/SettingsSeekBarMax" />
+
+        <TextView
+            android:id="@+id/SeekBarMidWay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/SettingsSeekBarMidWay" />
+    </RelativeLayout>
+
+    <SeekBar
+        android:id="@+id/sbBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/editPlayerName"
+        android:layout_below="@+id/GameSpeedLabel"
+        android:max="90"
+        android:paddingTop="20dp"
+        android:progress="30" />
+
+    <Button
+        android:id="@+id/returnbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:text="@string/Return" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="56dp"
+        android:layout_toLeftOf="@+id/editPlayerName"
+        android:text="@string/PlayerName"
+        android:textSize="@dimen/PlayerName2" />
+
+    <EditText
+        android:id="@+id/editPlayerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignLeft="@+id/returnbutton"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text="@string/Player1" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/GameSpeedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/sbBar"
+        android:layout_below="@+id/editPlayerName"
+        android:layout_marginTop="54dp"
+        android:text="@string/GameSpeed"
+        android:textSize="@dimen/PlayerName2" />
+
+</RelativeLayout>
