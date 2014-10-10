@@ -9,20 +9,26 @@
     <string name="Return">Return</string>
     <string name="PlayerName">Player Name: </string>
     <string name="Player1">Player 1</string>
-    
 
-	<!-- SeekBar in Settings -->
-    <string name="SettingsSeekBarMin">0.1</string>
-    <string name="SettingsSeekBarMidWay">1</string>
-    <string name="SettingsSeekBarMax">2</string>
+    <!-- SeekBar in Settings -->
+    <string name="SettingsSeekBarMidWay">1 secs</string>
     <string name="GameSpeed">Game Speed: </string>
-        
-    
-    
     <string name="GameLabel1">Portrait</string>
     <string name="GameLabel2">Landscape</string>
-    
-    
     <string name="GameOver">Game Over!</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <!-- Save Settings Dialog Alert Box -->
+    <string name="cancel">Return without saving</string>
+    <string name="save">Save</string>
+    <string name="saveq">Save Settings?</string>
+    <string name="savesettings">Do you want to save the settings and contine?</string>
+    
+    <!-- Score Labels, etc.. -->
+    <string name="CurrentScore">Current Score: </string>
+    <string name="HighScore">High Score: </string>
+    <string name="LivesLeft">Lives Left: </string>
+    <string name="ImThere">I\'m There</string>
     
 </resources>

@@ -6,9 +6,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="cs166.swathikotturu.dizzyphone.MainActivity" >
+    tools:context="cs175.skotturu.dizphone.MainActivity" >
 
-	<TextView
+    <TextView
 	    android:id="@+id/GameOver"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
@@ -16,5 +16,5 @@
 	    android:layout_centerVertical="true"
 	    android:text="@string/GameOver"
 	    android:textSize="@dimen/abc_action_bar_stacked_max_height" />
-
+        
 </RelativeLayout>
