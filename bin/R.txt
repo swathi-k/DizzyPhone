@@ -236,11 +236,11 @@ int drawable abc_textfield_searchview_right_holo_dark 0x7f020055
 int drawable abc_textfield_searchview_right_holo_light 0x7f020056
 int drawable ic_launcher 0x7f020057
 int id CurrentScore 0x7f050048
-int id GameLabel 0x7f050046
+int id GameLabel 0x7f05004a
 int id GameOver 0x7f05003e
 int id GameSpeedLabel 0x7f050044
 int id HighScore 0x7f050047
-int id ImThere 0x7f05004a
+int id ImThere 0x7f05004b
 int id LivesLeft 0x7f050049
 int id SeekBarMidWay 0x7f050043
 int id action_bar 0x7f05001c
@@ -303,7 +303,7 @@ int id showHome 0x7f050004
 int id showTitle 0x7f050006
 int id split_action_bar 0x7f05001e
 int id start_game_button 0x7f05003c
-int id start_game_portrait 0x7f05004b
+int id start_game_portrait 0x7f050046
 int id submit_area 0x7f050039
 int id tabMode 0x7f050002
 int id textView1 0x7f050040
@@ -340,9 +340,8 @@ int layout abc_simple_decor 0x7f030017
 int layout activity_main 0x7f030018
 int layout game_over 0x7f030019
 int layout settings 0x7f03001a
-int layout start_game_landscape 0x7f03001b
-int layout start_game_portrait 0x7f03001c
-int layout support_simple_spinner_dropdown_item 0x7f03001d
+int layout start_game_portrait 0x7f03001b
+int layout support_simple_spinner_dropdown_item 0x7f03001c
 int menu main 0x7f0c0000
 int string CurrentScore 0x7f0a0020
 int string DizzyPhone 0x7f0a000e
