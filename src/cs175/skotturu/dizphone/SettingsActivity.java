@@ -26,9 +26,20 @@ public class SettingsActivity extends Activity {
 		setContentView(R.layout.settings);
 		setPlayerName();
 		addReturnButtonListener();
-		addSeekListener(); 
+		addSeekListener();
+		
+		seek.setProgress(getSeekProgress());
 		} 
 	
+	private int getSeekProgress() {
+		SharedPreferences sharedPref = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+		float defaultValue = sharedPref.getFloat(getString(R.string.SettingsSeekBarMidWay), (float) 1.0);
+		int val = (int)(defaultValue*10);
+		if(val >= 1)
+			val--;
+		return val;
+	}
+
 	private void setPlayerName() {
 		TextView current = (TextView) findViewById(R.id.edit_player_name);
 		SharedPreferences sharedPref = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);

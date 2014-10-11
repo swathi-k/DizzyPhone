@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.View;
@@ -45,10 +46,14 @@ public class StartGameActivity extends Activity {
 		display();
 		LinearLayout myll = (LinearLayout) findViewById(R.id.start_game_portrait);
 		
-		if(rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) 
+		if(rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) { 
 			myll.setOrientation(LinearLayout.VERTICAL);
-		else 
+			Log.i("Orientation", "Orientation has changed to: Portrait");
+		}
+		else {
 			myll.setOrientation(LinearLayout.HORIZONTAL);
+			Log.i("Orientation", "Orientation has changed to: Landscape");
+		}
 		display();
 
 		start();
@@ -61,10 +66,14 @@ public class StartGameActivity extends Activity {
 	    super.onConfigurationChanged(newConfig);
 		int rotation = displ.getRotation();
 		LinearLayout myll = (LinearLayout) findViewById(R.id.start_game_portrait);
-		if(rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) 
+		if(rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) { 
 			myll.setOrientation(LinearLayout.VERTICAL);
-		else 
+			Log.i("Orientation", "Orientation has changed to: Portrait");
+		}
+		else {
 			myll.setOrientation(LinearLayout.HORIZONTAL);
+			Log.i("Orientation", "Orientation has changed to: Landscape");
+		}
 		
 		display();
 		
