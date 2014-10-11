@@ -52,7 +52,7 @@ public class StartGameActivity extends Activity {
 		display();
 
 		start();
-		//h.postDelayed(run, getGameSpeed());
+		h.postDelayed(run, getGameSpeed());
 	
 	}
 	
@@ -80,19 +80,14 @@ public class StartGameActivity extends Activity {
 			//@Override
 			public void onClick(View arg0) {
 				guess();
-//				h.postDelayed(run, getGameSpeed());
+				//h.postDelayed(run, getGameSpeed());
 			}
 		});
 	}
 	
 	private void start() {
-//		reset();
-		
 		display();
-//		changeGameLabel();
 		addListenerOnButton();
-//		h.postDelayed(run, getGameSpeed());
-
 	}
 	
 	private void guess() {
@@ -101,7 +96,7 @@ public class StartGameActivity extends Activity {
 		{
 			display();
 			changeGameLabel();
-//			h.postDelayed(run, getGameSpeed()*1000);
+			h.postDelayed(run, getGameSpeed());
 		}
 		else
 		{
