@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class StartGameActivity extends Activity {
@@ -21,6 +22,7 @@ public class StartGameActivity extends Activity {
 	final Context context = this;
 	private Handler h = new Handler();
 	Button imthere;
+	SharedPreferences.Editor editor = sharedPref.edit();
 	private Runnable run = new Runnable(){
 	    public void run(){
 	        //do something
@@ -35,11 +37,16 @@ public class StartGameActivity extends Activity {
 		displ = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		int rotation = displ.getRotation();
 		sharedPref = sharedPref = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+		setContentView(R.layout.start_game_portrait);
+		display();
+		LinearLayout myll = (LinearLayout) findViewById(R.id.start_game_portrait);
 		
-		if(rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180)
-			setContentView(R.layout.start_game_portrait);
-		else
-			setContentView(R.layout.start_game_landscape);
+		if(rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) 
+			myll.setOrientation(LinearLayout.VERTICAL);
+		else 
+			myll.setOrientation(LinearLayout.HORIZONTAL);
+		display();
+
 		start();
 		
 		//h.postDelayed(run, getGameSpeed());
@@ -50,13 +57,14 @@ public class StartGameActivity extends Activity {
 	public void onConfigurationChanged(Configuration newConfig) {
 	    super.onConfigurationChanged(newConfig);
 		int rotation = displ.getRotation();
-
-		if(rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180)
-			setContentView(R.layout.start_game_portrait);
-		else
-			setContentView(R.layout.start_game_landscape);
+		LinearLayout myll = (LinearLayout) findViewById(R.id.start_game_portrait);
+		if(rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) 
+			myll.setOrientation(LinearLayout.VERTICAL);
+		else 
+			myll.setOrientation(LinearLayout.HORIZONTAL);
 		
 		display();
+		
 		
 	}
 
@@ -69,17 +77,18 @@ public class StartGameActivity extends Activity {
 			//@Override
 			public void onClick(View arg0) {
 				guess();
-				h.postDelayed(run, getGameSpeed());
+//				h.postDelayed(run, getGameSpeed());
 			}
 		});
 	}
 	
 	private void start() {
-		reset();
+//		reset();
 		
 		display();
-		changeGameLabel();
-		h.postDelayed(run, getGameSpeed());
+//		changeGameLabel();
+		addListenerOnButton();
+//		h.postDelayed(run, getGameSpeed());
 
 	}
 	
@@ -117,11 +126,6 @@ public class StartGameActivity extends Activity {
 		//display game label
 		TextView game = (TextView) findViewById(R.id.GameLabel);
    		game.setText(getGameLabel());
-	}
-	
-	private void reset() {
-		setCurrentScore(0);
-		setLives(3);
 	}
 	
 	private boolean getOrientationGuess() {
@@ -170,7 +174,6 @@ public class StartGameActivity extends Activity {
 	}
 	
 	private void setHighScore(int score) {
-		SharedPreferences.Editor editor = sharedPref.edit();
 	   	editor.putInt(getString(R.string.HighScore), score);
    		editor.commit();
 	}
@@ -187,7 +190,6 @@ public class StartGameActivity extends Activity {
 	}
 	
 	private void setCurrentScore(int score) {
-		SharedPreferences.Editor editor = sharedPref.edit();
 	   	editor.putInt(getString(R.string.CurrentScore), score);
    		editor.commit();
 	}
@@ -204,7 +206,6 @@ public class StartGameActivity extends Activity {
 	}
 	
 	private void setLives(int live) {
-		SharedPreferences.Editor editor = sharedPref.edit();
 	   	editor.putInt(getString(R.string.LivesLeft), live);
    		editor.commit();
 	}
@@ -225,7 +226,6 @@ public class StartGameActivity extends Activity {
 	}
 	
 	private void setGameLabel(String orien) {
-		SharedPreferences.Editor editor = sharedPref.edit();
 	   	editor.putString(getString(R.string.GameLabel1), orien);
    		editor.commit();
    		TextView game = (TextView) findViewById(R.id.GameLabel);
