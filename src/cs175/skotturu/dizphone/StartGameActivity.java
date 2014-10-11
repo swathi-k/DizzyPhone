@@ -22,7 +22,7 @@ public class StartGameActivity extends Activity {
 	final Context context = this;
 	private Handler h = new Handler();
 	Button imthere;
-	SharedPreferences.Editor editor = sharedPref.edit();
+	SharedPreferences.Editor editor;
 	private Runnable run = new Runnable(){
 	    public void run(){
 	        //do something
@@ -33,11 +33,15 @@ public class StartGameActivity extends Activity {
 	
 	@Override 
 	public void onCreate(Bundle savedInstanceState) { 
-		super.onCreate(savedInstanceState); 
+		super.onCreate(savedInstanceState);
+		sharedPref = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+		editor = sharedPref.edit();
 		displ = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		int rotation = displ.getRotation();
-		sharedPref = sharedPref = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+		
+
 		setContentView(R.layout.start_game_portrait);
+		
 		display();
 		LinearLayout myll = (LinearLayout) findViewById(R.id.start_game_portrait);
 		
@@ -48,7 +52,6 @@ public class StartGameActivity extends Activity {
 		display();
 
 		start();
-		
 		//h.postDelayed(run, getGameSpeed());
 	
 	}
@@ -104,10 +107,16 @@ public class StartGameActivity extends Activity {
 		{
 			savescores();
 			//start intent GameOver
+			reset();
 			Intent intent = new Intent(context, GameOverActivity.class);
 			startActivity(intent);
 			finish();
 		}
+	}
+
+	private void reset() {
+		setLives(3);
+		setCurrentScore(0);
 	}
 
 	private void display() {
