@@ -1,0 +1,198 @@
+package cs175.skotturu.dizphone;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
+import android.view.Display;
+import android.view.Surface;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class StartGameActivity extends Activity {
+	Handler handler;
+	Runnable timeUp;
+	SharedPreferences sharedPref;
+	final Context context = this;
+	Display display;
+	Button imthere;
+	
+	@Override 
+	public void onCreate(Bundle savedInstanceState) { 
+		super.onCreate(savedInstanceState); 
+//		setContentView(R.layout.start_game_portrait);
+//		
+//		startGame();
+//		addButtonListener();
+	}
+
+	
+	public void addButtonListener() {
+
+//		imthere = (Button) findViewById(R.id.ImThere);
+//		imthere.setOnClickListener(new OnClickListener() {
+//			
+//			//@Override
+//			public void onClick(View arg0) {
+//				handler.postDelayed(timeUp, getGameSpeed());
+//			}
+//		});
+	}
+
+	private void startGame() {
+//		handler = new Handler(); //used to set up a delayed callback
+//
+//		//Runnable object called after delay via Handler
+//		timeUp = new Runnable() {
+//			public void run() {
+//				//do after times up
+//				outOfTime();
+//			}
+//
+//		};
+//		display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+//		sharedPref = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+//		handler.postDelayed(timeUp, getGameSpeed());
+//		
+//		reset();
+//		display();
+	}
+	
+	private void reset() {
+		setCurrentScore(0);
+		setLives(3);
+		
+	}
+
+
+	public void outOfTime() {
+//		int live = getLives();
+//		if(live < 1)
+//		{
+//			savescores();
+//			Intent intent = new Intent(context, GameOverActivity.class);
+//			startActivity(intent);
+//			finish();
+//		}
+//		else
+//			play();
+	}
+
+	private void play() {
+//		int ran = (int)(Math.random()*2);
+//		int current = getCurrentScore();
+//		int rotation = display.getRotation();
+//		int life = getLives();
+//		boolean portrait;
+//		
+//		if(getGameLabel().equals("Portrait"))
+//			portrait = true;
+//		else
+//			portrait = false;
+//		
+//		if(rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180)
+//		{
+//			if(portrait)
+//				current++;
+//			else
+//				life--;
+//		}
+//		else
+//		{
+//			
+//			if(!portrait)
+//				current++;
+//			else
+//				life--;
+//		}
+//
+//		setCurrentScore(current);
+//	   	setLives(life);
+//	   	
+//		if(ran == 0)
+//		{
+//			setGameLabel("Portrait");
+//			setContentView(R.layout.start_game_portrait);
+//		}
+//		else 
+//		{
+//		   	setGameLabel("Landscape");
+//		   	setContentView(R.layout.start_game_landscape);
+//		}
+//		
+//		display();
+	}
+
+	private void display() {
+		
+		TextView highScore = (TextView) findViewById(R.id.HighScore);
+		highScore.setText(getString(R.string.HighScore) + getHighScore());
+		
+		TextView currentScore = (TextView) findViewById(R.id.CurrentScore);
+		currentScore.setText(getString(R.string.CurrentScore) + getCurrentScore());
+		
+		TextView lives = (TextView) findViewById(R.id.LivesLeft);
+		lives.setText(getString(R.string.LivesLeft) + getLives());
+	}
+
+	private void savescores() {
+		int current = getCurrentScore();
+		int high = getHighScore();
+		
+		if(current > high)
+    	   	setHighScore(current);
+	}
+	
+	private int getHighScore() {
+		return sharedPref.getInt(getString(R.string.HighScore), 0);
+	}
+	
+	private void setHighScore(int score) {
+		SharedPreferences.Editor editor = sharedPref.edit();
+	   	editor.putInt(getString(R.string.HighScore), score);
+   		editor.commit();
+	}
+	
+	private int getCurrentScore() {
+		return sharedPref.getInt(getString(R.string.CurrentScore), 0);
+	}
+	
+	private void setCurrentScore(int score) {
+		SharedPreferences.Editor editor = sharedPref.edit();
+	   	editor.putInt(getString(R.string.CurrentScore), score);
+   		editor.commit();
+	}
+	
+	private int getLives() {
+		return sharedPref.getInt(getString(R.string.LivesLeft), 3);
+	}
+	
+	private void setLives(int live) {
+		SharedPreferences.Editor editor = sharedPref.edit();
+	   	editor.putInt(getString(R.string.LivesLeft), live);
+   		editor.commit();
+	}
+	
+	private long getGameSpeed() {
+		return (long) sharedPref.getFloat(getString(R.string.SettingsSeekBarMidWay), (float) 1.0) * 1000;
+	}
+	
+	private String getGameLabel() {
+		return sharedPref.getString(getString(R.string.GameLabel1), "Portrait");
+	}
+	
+	private void setGameLabel(String orien) {
+		SharedPreferences.Editor editor = sharedPref.edit();
+	   	editor.putString(getString(R.string.GameLabel1), orien);
+   		editor.commit();
+   		
+   		TextView game = (TextView) findViewById(R.id.GameLabel);
+   		game.setText(orien);
+	}
+
+}

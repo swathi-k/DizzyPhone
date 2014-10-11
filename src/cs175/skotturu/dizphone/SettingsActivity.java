@@ -34,7 +34,6 @@ public class SettingsActivity extends Activity {
 		SharedPreferences sharedPref = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
 		String name = sharedPref.getString(getString(R.string.Player1), "Player 1");
 		current.setText(name);
-		
 	}
 
 	private void addReturnButtonListener() {
@@ -62,8 +61,10 @@ public class SettingsActivity extends Activity {
 				        	   	editor.putFloat(getString(R.string.SettingsSeekBarMidWay), speed);
 				        	   	editor.commit();
 				        	   	dialog.cancel();
+				        	   	
 				   				Intent intent = new Intent(context, MainActivity.class);
 				   				startActivity(intent);
+				   				finish();
 				           }
 				       });
 				builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -73,6 +74,7 @@ public class SettingsActivity extends Activity {
 				        	   	dialog.cancel();
 				   				Intent intent = new Intent(context, MainActivity.class);
 				   				startActivity(intent);
+				   				finish();
 				           }
 				       });
 				// Set other dialog properties

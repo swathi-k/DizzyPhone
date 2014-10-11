@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Display;
@@ -15,117 +16,147 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class StartGameActivity extends Activity {
-	Handler handler;
-	Runnable timeUp;
-
 	SharedPreferences sharedPref;
+	Display displ;
 	final Context context = this;
-	Display display;
+	private Handler h = new Handler();
 	Button imthere;
+	private Runnable run = new Runnable(){
+	    public void run(){
+	        //do something
+	    	guess();
+	        
+	    }
+	};
 	
 	@Override 
 	public void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState); 
-		setContentView(R.layout.start_game);
+		displ = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		int rotation = displ.getRotation();
+		sharedPref = sharedPref = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
 		
-		startGame();
-		addButtonListener();
+		if(rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180)
+			setContentView(R.layout.start_game_portrait);
+		else
+			setContentView(R.layout.start_game_landscape);
+		start();
+		
+		//h.postDelayed(run, getGameSpeed());
+	
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
+		int rotation = displ.getRotation();
+
+		if(rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180)
+			setContentView(R.layout.start_game_portrait);
+		else
+			setContentView(R.layout.start_game_landscape);
+		
+		display();
+		
 	}
 
-	
-	public void addButtonListener() {
+	public void addListenerOnButton() {
 
 		imthere = (Button) findViewById(R.id.ImThere);
+
 		imthere.setOnClickListener(new OnClickListener() {
-			
+
 			//@Override
 			public void onClick(View arg0) {
-				handler.postDelayed(timeUp, getGameSpeed());
+				guess();
+				h.postDelayed(run, getGameSpeed());
 			}
 		});
 	}
-
-	private void startGame() {
-		handler = new Handler(); //used to set up a delayed callback
-
-		//Runnable object called after delay via Handler
-		timeUp = new Runnable() {
-			public void run() {
-				//do after times up
-				outOfTime();
-			}
-
-		};
-		display = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		sharedPref = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
-		handler.postDelayed(timeUp, getGameSpeed());
+	
+	private void start() {
+		reset();
 		
 		display();
+		changeGameLabel();
+		h.postDelayed(run, getGameSpeed());
+
 	}
 	
-	public void outOfTime() {
-		int live = getLives();
-		if(live < 1)
+	private void guess() {
+		checkcorrect(getOrientationGuess());
+		if(keepgoing())
 		{
-			savescores();
-			Intent intent = new Intent(context, GameOverActivity.class);
-			startActivity(intent);
+			display();
+			changeGameLabel();
+//			h.postDelayed(run, getGameSpeed()*1000);
 		}
 		else
-			play();
+		{
+			savescores();
+			//start intent GameOver
+			Intent intent = new Intent(context, GameOverActivity.class);
+			startActivity(intent);
+			finish();
+		}
 	}
 
-	private void play() {
-		int ran = (int)(Math.random()*2);
-		int current = getCurrentScore();
-		int rotation = display.getRotation();
-		int life = getLives();
-		boolean portrait;
+	private void display() {
+		//display HighScore
+		TextView highScore = (TextView) findViewById(R.id.HighScore);
+		highScore.setText(getString(R.string.HighScore) + getHighScore());
 		
+		//display CurrentScore
+		TextView currentScore = (TextView) findViewById(R.id.CurrentScore);
+		currentScore.setText(getString(R.string.CurrentScore) + getCurrentScore());
+		
+		//display lives left
+		TextView lives = (TextView) findViewById(R.id.LivesLeft);
+		lives.setText(getString(R.string.LivesLeft) + getLives());
+		
+		//display game label
+		TextView game = (TextView) findViewById(R.id.GameLabel);
+   		game.setText(getGameLabel());
+	}
+	
+	private void reset() {
+		setCurrentScore(0);
+		setLives(3);
+	}
+	
+	private boolean getOrientationGuess() {
+		//@TODO change "Portrait" to enum
 		if(getGameLabel().equals("Portrait"))
-			portrait = true;
+			return true;
 		else
-			portrait = false;
-		
+			return false;
+	}
+
+	private void checkcorrect(boolean portrait) {
+		int rotation = displ.getRotation();
 		if(rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180)
 		{
 			if(portrait)
-				current++;
+				incCurrentScore();
 			else
-				life--;
+				decLives();
 		}
 		else
 		{
 			if(!portrait)
-				current++;
+				incCurrentScore();
 			else
-				life--;
+				decLives();
 		}
-
-		setCurrentScore(current);
-	   	setLives(life);
-	   	
-		if(ran == 0)
-			setGameLabel("Portrait");	
-		else 
-		   	setGameLabel("Landscape");
-		
-		display();
 	}
-
-	private void display() {
-		
-		TextView highScore = (TextView) findViewById(R.id.HighScore);
-		highScore.setText(getString(R.string.HighScore) + getHighScore());
-		
-		TextView currentScore = (TextView) findViewById(R.id.CurrentScore);
-		currentScore.setText(getString(R.string.CurrentScore) + getCurrentScore());
-		
-		TextView lives = (TextView) findViewById(R.id.LivesLeft);
-		lives.setText(getString(R.string.LivesLeft) + getLives());
-
+	
+	private boolean keepgoing() {
+		if(getLives() < 1)
+			return false;
+		else
+			return true;
 	}
-
+	
 	private void savescores() {
 		int current = getCurrentScore();
 		int high = getHighScore();
@@ -144,6 +175,13 @@ public class StartGameActivity extends Activity {
    		editor.commit();
 	}
 	
+	private void incCurrentScore() {
+		int current = getCurrentScore();
+		current++;
+		setCurrentScore(current);
+	}
+
+
 	private int getCurrentScore() {
 		return sharedPref.getInt(getString(R.string.CurrentScore), 0);
 	}
@@ -154,6 +192,13 @@ public class StartGameActivity extends Activity {
    		editor.commit();
 	}
 	
+	private void decLives() {
+		int live = getLives();
+		live--;
+		setLives(live);
+	}
+
+
 	private int getLives() {
 		return sharedPref.getInt(getString(R.string.LivesLeft), 3);
 	}
@@ -172,13 +217,18 @@ public class StartGameActivity extends Activity {
 		return sharedPref.getString(getString(R.string.GameLabel1), "Portrait");
 	}
 	
+	private void changeGameLabel() {
+		if( Math.random() < 0.5)
+			setGameLabel("Portrait");
+		else
+			setGameLabel("Landscape");
+	}
+	
 	private void setGameLabel(String orien) {
 		SharedPreferences.Editor editor = sharedPref.edit();
 	   	editor.putString(getString(R.string.GameLabel1), orien);
    		editor.commit();
-   		
    		TextView game = (TextView) findViewById(R.id.GameLabel);
    		game.setText(orien);
 	}
-
 }
